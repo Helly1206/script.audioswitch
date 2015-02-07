@@ -1,0 +1,10 @@
+CHANGELOG
+
+1.0.0: (2015-02-07)
+- Extract audio options from log file (these are logged every time a user logs on)
+- Ability to configure addon, no hard coded parameters anymore
+- Select between all audio outputs and possibility to add user friendly name
+
+0.9.0:
+- Initial Release
+- No settings yet, only able to switch between HDMI and analog audio hardcoded in script
