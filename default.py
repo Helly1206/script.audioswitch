@@ -59,7 +59,7 @@ def writeLog(message, level=xbmc.LOGNOTICE):
     else:
         LASTMSG = message
         MSGCOUNT = 0
-        xbmc.log('%s: %s' % (__filename__, message.encode('utf-8')), level)  
+        xbmc.log('%s: %s' % (__addonid__, message.encode('utf-8')), level)  
 
 ####################################### AUDIOSWITCH FUNCTIONS #####################################
 
