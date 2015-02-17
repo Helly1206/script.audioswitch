@@ -1,5 +1,10 @@
 CHANGELOG
 
+1.0.2: (2015-02-17)
+- detect "ALSA:" from bash script
+- Added functionality for pulse-audio devices
+- Removed typo in device name
+
 1.0.1: (2015-02-16)
 - Display correct addon name in log
 - Added "ALSA:", now correct output is selected after restart. Only works for alsa, not for PulseAudio

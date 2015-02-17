@@ -5,7 +5,18 @@ AMOUNT=8
 DEBUG=0
 
 #find latest audio enumeration in log file
-AUDIO_LINE=$(cat $LOG_FILE_XBMC|grep -n "Enumerated ALSA devices"|tail -n 1|awk 'BEGIN { FS = ":" } ; { print $1 }'|bc)
+AUDIO_LINE=$(cat $LOG_FILE_XBMC|grep -n "Enumerated PULSE devices"|tail -n 1|awk 'BEGIN { FS = ":" } ; { print $1 }'|bc)
+
+if [ -z $AUDIO_LINE ]; then
+    AUDIO_LINE=$(cat $LOG_FILE_XBMC|grep -n "Enumerated ALSA devices"|tail -n 1|awk 'BEGIN { FS = ":" } ; { print $1 }'|bc)
+    if [ -z $AUDIO_LINE ]; then 
+        exit 1
+    else
+        DEVICE="ALSA:"
+    fi
+else
+    DEVICE="PULSE:"
+fi
 
 if [ $DEBUG -gt 0 ]; then
     echo "Line to start:" $AUDIO_LINE
@@ -28,7 +39,7 @@ if [ $AUDIO_LINE -gt 0 ]; then
                 DEVICENAME="Option$INDEX"            
             fi
  	    START=$(echo $AUDIO_LINE+4|bc)
-            DISPLAYNAMEEXTRA=$(cat $LOG_FILE_XBMC|head -$START|tail -1|awk '{ s = ""; for (i = 6; i <= NF; i++) s = s $i " "; print s }')
+            DISPLAYNAMEEXTRA=$(cat $LOG_FILE_XBMC|head -$START|tail -1|awk '{ s = ""; for (i = 5; i <= NF; i++) s = s $i " "; print s }')
             #echo $DISPLAYNAMEEXTRA
             if [ -z "$DISPLAYNAMEEXTRA" ]; then
                 START=$(echo $AUDIO_LINE+3|bc)
@@ -38,7 +49,7 @@ if [ $AUDIO_LINE -gt 0 ]; then
             fi
 
             #echo output
-            echo -e $DEVICENAME"\t"$DISPLAYNAME            
+            echo -e $DEVICE$DEVICENAME"\t"$DISPLAYNAME            
 
             CONT=1
             AUDIO_LINE=$(echo $AUDIO_LINE+$AMOUNT|bc)

@@ -65,9 +65,9 @@ def writeLog(message, level=xbmc.LOGNOTICE):
 
 def SwitchAudio(audioout):
     if audioout == AUDIO_OPTION1:
-        xbmc.executeJSONRPC(jsonSetAudioDevice % ("ALSA:" + __addon__.getSetting(OPTION1_STR)))
+        xbmc.executeJSONRPC(jsonSetAudioDevice % (__addon__.getSetting(OPTION1_STR)))
     else:
-        xbmc.executeJSONRPC(jsonSetAudioDevice % ("ALSA:" + __addon__.getSetting(OPTION2_STR)))
+        xbmc.executeJSONRPC(jsonSetAudioDevice % (__addon__.getSetting(OPTION2_STR)))
     return audioout
 
 def GetCurrentAudio( ):
