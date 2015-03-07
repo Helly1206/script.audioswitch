@@ -1,5 +1,8 @@
 CHANGELOG
 
+1.0.3: (2015-03-07)
+- Added language files for English and Dutch
+
 1.0.2: (2015-02-17)
 - detect "ALSA:" from bash script
 - Added functionality for pulse-audio devices

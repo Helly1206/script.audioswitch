@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.audioswitch"
        name="Kodi Audio Switch"
-       version="1.0.2"
+       version="1.0.3"
        provider-name="Helly">
   <requires>
     <import addon="xbmc.python" version="2.14.0"/>
@@ -11,7 +11,9 @@
   <extension point="xbmc.addon.metadata">
     <platform>all</platform>
     <summary lang="en">Kodi Audio Switch</summary>
-    <description lang="en">Kodi Audio Switch</description>
+    <summary lang="nl">Kodi Audio Switch</summary>
+    <description lang="en">This addon makes it possible to easily switch audio output.</description>
+    <description lang="en">Deze addon maakt gemakkelijk schakelen tussen audio uitgangen mogelijk."</description>
     <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
     <forum></forum>
     <website></website>

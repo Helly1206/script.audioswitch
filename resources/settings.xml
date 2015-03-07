@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <settings>
 	<!-- OPTION 1 -->
-	<category label="Option 1">
-		<setting id="device_opt1" label="Select Device" type="action" action="RunScript($ID,device_opt1)" default=""/>
-		<setting id="device_opt1_name" type="text" label="Friendly Name" default="Option 1" />
+	<category label="40100">
+		<setting id="device_opt1" label="40102" type="action" action="RunScript($ID,device_opt1)" default=""/>
+		<setting id="device_opt1_name" type="text" label="40103" default="Option 1" />
 	</category>
 	<!-- OPTION 2 -->
-	<category label="Option 2">
-		<setting id="device_opt2" label="Select Device" type="action" action="RunScript($ID,device_opt2)" default=""/>
-		<setting id="device_opt2_name" type="text" label="Friendly Name" default="Option 2" />
+	<category label="40101">
+		<setting id="device_opt2" label="40102" type="action" action="RunScript($ID,device_opt2)" default=""/>
+		<setting id="device_opt2_name" type="text" label="40103" default="Option 2" />
 	</category>
 </settings>

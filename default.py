@@ -15,12 +15,10 @@ __addonid__    = __addon__.getAddonInfo('id')
 __cwd__        = __addon__.getAddonInfo('path').decode("utf-8")
 __version__    = __addon__.getAddonInfo('version')
 __language__   = __addon__.getLocalizedString
+__LS__ = __addon__.getLocalizedString
 
 jsonGetAudioDevice = '{"jsonrpc":"2.0","method":"Settings.GetSettingValue", "params":{"setting":"audiooutput.audiodevice"},"id":1}'
 jsonSetAudioDevice = '{"jsonrpc":"2.0","method":"Settings.SetSettingValue", "params":{"setting":"audiooutput.audiodevice","value":"%s"},"id":1}'
-#audioDeviceHDMI = 'ALSA:hdmi:CARD=PCH,DEV=0'
-#audioDeviceAnalog = 'ALSA:@'
-#audioDeviceAnalog = 'ALSA:@:CARD=PCH,DEV=0'
 
 # Globals needed for writeLog()
 LASTMSG = ''
@@ -89,9 +87,9 @@ def PrintableAudio(audioout):
 
 def PrintableSelection(audioout):
     if (audioout == AUDIO_TOGGLE):
-	rv = "[Toggled]"
+	rv = __LS__(40010)
     else:
-	rv = "[Selected]"
+	rv = __LS__(40011)
     return rv   
 
 def SelectAudio(audioout):
@@ -111,7 +109,7 @@ def SelectAudio(audioout):
 	    SwitchAudio(AUDIO_OPTION2)
         selaudio=audioout
     writeLog('Selected output: %s %s' % (PrintableAudio(selaudio),PrintableSelection(audioout)))
-    notifyOSD('AudioSwitch','Selected: %s %s' % (PrintableAudio(selaudio),PrintableSelection(audioout)),__IconSpeaker__);
+    notifyOSD(__LS__(40000), __LS__(40001) % (PrintableAudio(selaudio),PrintableSelection(audioout)),__IconSpeaker__);
 
 ####################################### SETTINGS FUNCTIONS #####################################
 
@@ -149,7 +147,7 @@ def OptionSelector(SelOpt):
     devices, names = getAudioOptions(GetLogs())
     dialog = xbmcgui.Dialog()
     if names != []:
-        selected = dialog.select("Select Audio Device %s" % SelOpt[-1:], names)
+        selected = dialog.select(__LS__(40002) % SelOpt[-1:], names)
         if selected != -1:
             __addon__.setSetting(SelOpt, str(devices[selected]).strip())
             __addon__.setSetting(SelOpt + NAME_STR, str(names[selected]))
@@ -173,7 +171,7 @@ if len(sys.argv) > 1:
 	OptionSelector(sys.argv[1]);
     else:
 	writeLog('Invalid Argument',xbmc.LOGERROR)
-    	notifyOSD('AudioSwitch','Invalid Argument',__IconError__);
+    	notifyOSD(__LS__(40002), __LS__(40003),__IconError__);
 else: # allways toggle if no argument
     SelectAudio(AUDIO_TOGGLE);
 writeLog('Audioswitch Ready ...')
