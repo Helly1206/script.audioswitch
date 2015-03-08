@@ -35,8 +35,7 @@ NAME_STR = '_name'
 LOG_ALL = 0
 
 #path and icons
-__path__ = os.path.dirname(os.path.abspath(__file__))
-__filename__ = os.path.basename(os.path.abspath(__file__))
+__path__ = __addon__.getAddonInfo('path')
 
 __IconStop__ = xbmc.translatePath(os.path.join( __path__,'resources', 'media', 'stop.png'))
 __IconError__ = xbmc.translatePath(os.path.join( __path__,'resources', 'media', 'error.png'))
