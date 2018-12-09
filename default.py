@@ -1,7 +1,10 @@
 # credits for original version to teeedubb
 # http://forum.xbmc.org/showthread.php?tid=199579
 
+from builtins import str
+from builtins import range
 import os
+import stat
 import json
 import xbmc
 import xbmcaddon
@@ -125,9 +128,15 @@ def cmdline(command):
     )
     return process.communicate()[0]
 
+def mkExe(CmdFile):
+	st = os.stat(CmdFile)
+	if not (st.st_mode & stat.S_IEXEC):
+		os.chmod(CmdFile, st.st_mode|stat.S_IEXEC|stat.S_IXGRP|stat.S_IXOTH)
+
 def getAudioOptions(LogFile):
     devices = []
     names = []
+    mkExe(__GETAUDIO__)
     TheCommand = ('%s %s' % (__GETAUDIO__, LogFile))
     #writeLog(TheCommand)
     res = cmdline(TheCommand)
@@ -136,7 +145,7 @@ def getAudioOptions(LogFile):
         devices.append(data[0])
         names.append(data[1])
     if LOG_ALL == 1:
-        for i in xrange(0,len(devices)):
+        for i in range(0,len(devices)):
             writeLog('%s | %s' % (devices[i],names[i]))
     return devices, names
 

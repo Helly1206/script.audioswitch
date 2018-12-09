@@ -1,5 +1,9 @@
 CHANGELOG
 
+1.0.4: (2018-12-09) From Kodi 18 
+- Added making check log script executable
+- Converted to python 3 for future compatibility
+
 1.0.3: (2015-03-07)
 - Added language files for English and Dutch
 
