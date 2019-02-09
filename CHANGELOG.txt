@@ -1,5 +1,8 @@
 CHANGELOG
 
+1.0.5 (2019-02-09) From Kodi 18
+- Updated python 3 conversion to work correctly for python2 and python3
+
 1.0.4: (2018-12-09) From Kodi 18 
 - Added making check log script executable
 - Converted to python 3 for future compatibility
