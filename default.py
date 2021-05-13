@@ -7,13 +7,14 @@ import json
 import xbmc
 import xbmcaddon
 import xbmcgui
+import xbmcvfs
 from xbmc import getCondVisibility as condition, translatePath as translate, log as xbmc_log
 from subprocess import PIPE, Popen
 
 __addon__      = xbmcaddon.Addon()
 __addonname__  = __addon__.getAddonInfo('name')
 __addonid__    = __addon__.getAddonInfo('id')
-__cwd__        = __addon__.getAddonInfo('path').decode("utf-8")
+__cwd__        = __addon__.getAddonInfo('path')
 __version__    = __addon__.getAddonInfo('version')
 __language__   = __addon__.getLocalizedString
 __LS__ = __addon__.getLocalizedString
@@ -38,18 +39,18 @@ LOG_ALL = 0
 #path and icons
 __path__ = __addon__.getAddonInfo('path')
 
-__IconStop__ = xbmc.translatePath(os.path.join( __path__,'resources', 'media', 'stop.png'))
-__IconError__ = xbmc.translatePath(os.path.join( __path__,'resources', 'media', 'error.png'))
-__IconSpeaker__ = xbmc.translatePath(os.path.join( __path__,'resources', 'media', 'speaker.png'))
+__IconStop__ = xbmcvfs.translatePath(os.path.join( __path__,'resources', 'media', 'stop.png'))
+__IconError__ = xbmcvfs.translatePath(os.path.join( __path__,'resources', 'media', 'error.png'))
+__IconSpeaker__ = xbmcvfs.translatePath(os.path.join( __path__,'resources', 'media', 'speaker.png'))
 
-__GETAUDIO__ = xbmc.translatePath(os.path.join( __path__,'resources', 'lib', 'getAudio.sh'))
+__GETAUDIO__ = xbmcvfs.translatePath(os.path.join( __path__,'resources', 'lib', 'getAudio.sh'))
 
 ####################################### GLOBAL FUNCTIONS #####################################
 
 def notifyOSD(header, message, icon):
-    xbmc.executebuiltin('XBMC.Notification(%s,%s,5000,%s)' % (header.encode('utf-8'), message.encode('utf-8'), icon))
+    xbmc.executebuiltin('XBMC.Notification(%s,%s,5000,%s)' % (header, message, icon))
 
-def writeLog(message, level=xbmc.LOGNOTICE):
+def writeLog(message, level=xbmc.LOGINFO):
     global LASTMSG, MSGCOUNT
     if LASTMSG == message:
         MSGCOUNT = MSGCOUNT + 1
@@ -57,7 +58,7 @@ def writeLog(message, level=xbmc.LOGNOTICE):
     else:
         LASTMSG = message
         MSGCOUNT = 0
-        xbmc.log('%s: %s' % (__addonid__, message.encode('utf-8')), level)  
+        xbmc.log('%s: %s' % (__addonid__, message), level)  
 
 ####################################### AUDIOSWITCH FUNCTIONS #####################################
 
@@ -80,34 +81,34 @@ def GetCurrentAudio( ):
 
 def PrintableAudio(audioout):
     if (audioout == AUDIO_OPTION1):
-	rv = __addon__.getSetting(OPTION1_STR+NAME_STR)
+        rv = __addon__.getSetting(OPTION1_STR+NAME_STR)
     else:
-	rv = __addon__.getSetting(OPTION2_STR+NAME_STR)
+        rv = __addon__.getSetting(OPTION2_STR+NAME_STR)
     return rv
 
 def PrintableSelection(audioout):
     if (audioout == AUDIO_TOGGLE):
-	rv = __LS__(40010)
+        rv = __LS__(40010)
     else:
-	rv = __LS__(40011)
+        rv = __LS__(40011)
     return rv   
 
 def SelectAudio(audioout):
     currentaudioout = GetCurrentAudio()
     writeLog('Current output: %s' % PrintableAudio(currentaudioout))
     if (audioout == AUDIO_TOGGLE):
-	if (currentaudioout == AUDIO_OPTION1):
-	    selaudio=SwitchAudio(AUDIO_OPTION2)
-	else:
-	    selaudio=SwitchAudio(AUDIO_OPTION1)
+        if (currentaudioout == AUDIO_OPTION1):
+            selaudio=SwitchAudio(AUDIO_OPTION2)
+        else:
+            selaudio=SwitchAudio(AUDIO_OPTION1)
     elif (audioout == AUDIO_OPTION1):
-	if (currentaudioout != AUDIO_OPTION1):
-	    SwitchAudio(AUDIO_OPTION1)
-        selaudio=audioout
+        if (currentaudioout != AUDIO_OPTION1):
+            SwitchAudio(AUDIO_OPTION1)
+            selaudio=audioout
     else:
-	if (currentaudioout != AUDIO_OPTION2):
-	    SwitchAudio(AUDIO_OPTION2)
-        selaudio=audioout
+        if (currentaudioout != AUDIO_OPTION2):
+            SwitchAudio(AUDIO_OPTION2)
+            selaudio=audioout
     writeLog('Selected output: %s %s' % (PrintableAudio(selaudio),PrintableSelection(audioout)))
     notifyOSD(__LS__(40000), __LS__(40001) % (PrintableAudio(selaudio),PrintableSelection(audioout)),__IconSpeaker__);
 
@@ -174,10 +175,10 @@ if len(sys.argv) > 1:
     elif (sys.argv[1] == "2"):
         SelectAudio(AUDIO_OPTION2);
     elif (sys.argv[1].startswith('device_opt')):
-	OptionSelector(sys.argv[1]);
+        OptionSelector(sys.argv[1]);
     else:
-	writeLog('Invalid Argument',xbmc.LOGERROR)
-    	notifyOSD(__LS__(40002), __LS__(40003),__IconError__);
+        writeLog('Invalid Argument',xbmc.LOGERROR)
+        notifyOSD(__LS__(40002), __LS__(40003),__IconError__);
 else: # allways toggle if no argument
     SelectAudio(AUDIO_TOGGLE);
 writeLog('Audioswitch Ready ...')
